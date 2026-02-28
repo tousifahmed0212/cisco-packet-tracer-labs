@@ -1,0 +1,35 @@
+!
+! Switch S2 configuration for VLAN and trunk lab
+!
+enable
+configure terminal
+ hostname S2
+
+ ! Create VLANs (same IDs as S1)
+ vlan 10
+  name Users_VLAN10
+ exit
+ vlan 20
+  name Users_VLAN20
+ exit
+
+ ! Access ports
+ interface FastEthernet0/1
+  switchport mode access
+  switchport access vlan 10
+  no shutdown
+ exit
+ interface FastEthernet0/2
+  switchport mode access
+  switchport access vlan 20
+  no shutdown
+ exit
+
+ ! Trunk back to S1
+ interface GigabitEthernet0/1
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk allowed vlan 10,20
+  no shutdown
+ exit
+end

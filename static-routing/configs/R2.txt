@@ -1,0 +1,22 @@
+!
+! Router R2 configuration for the static routing lab
+!
+enable
+configure terminal
+ hostname R2
+
+ ! LAN interface
+ interface GigabitEthernet0/0
+  ip address 192.168.2.1 255.255.255.0
+  no shutdown
+ exit
+
+ ! Serial WAN link to R1
+ interface Serial0/0/0
+  ip address 10.0.0.2 255.255.255.252
+  no shutdown
+ exit
+
+ ! Static route to reach R1's LAN
+ ip route 192.168.1.0 255.255.255.0 10.0.0.1
+end

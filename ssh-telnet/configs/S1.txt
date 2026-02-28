@@ -1,0 +1,32 @@
+!
+! Switch S1 configuration for Telnet and SSH remote management lab
+!
+enable
+configure terminal
+ hostname S1
+
+ ! Configure management VLAN interface
+ interface vlan 1
+  ip address 192.168.1.2 255.255.255.0
+  no shutdown
+ exit
+
+ ! Default gateway points to the router
+ ip default-gateway 192.168.1.1
+
+ ! Set domain name and create a local user
+ ip domain-name example.local
+ username admin privilege 15 secret cisco123
+
+ ! Generate RSA keys and enable SSH
+ crypto key generate rsa modulus 1024
+ ip ssh version 2
+
+ ! Configure VTY lines to allow only SSH
+ line vty 0 4
+  login local
+  transport input ssh
+  exec-timeout 10 0
+ exit
+
+end

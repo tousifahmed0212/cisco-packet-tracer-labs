@@ -1,0 +1,33 @@
+!
+! Router R1 configuration for Telnet and SSH remote management lab
+!
+enable
+configure terminal
+ hostname R1
+
+ ! Configure the management interface
+ interface GigabitEthernet0/0
+  ip address 192.168.1.1 255.255.255.0
+  no shutdown
+ exit
+
+ ! Set host and domain names (required for RSA key generation)
+ ip domain-name example.local
+
+ ! Create a local user with privilege 15
+ username admin privilege 15 secret cisco123
+
+ ! Generate RSA keys for SSH (1024-bit)
+ crypto key generate rsa modulus 1024
+
+ ! Enable SSH version 2
+ ip ssh version 2
+
+ ! Configure VTY lines
+ line vty 0 4
+  login local
+  transport input ssh
+  exec-timeout 10 0
+ exit
+
+end

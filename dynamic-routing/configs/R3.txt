@@ -1,0 +1,29 @@
+!
+! Router R3 configuration for dynamic routing lab (OSPF)
+!
+enable
+configure terminal
+ hostname R3
+
+ ! Interfaces to R1 and R2
+ interface GigabitEthernet0/0
+  ip address 10.0.13.2 255.255.255.252
+  no shutdown
+ exit
+ interface GigabitEthernet0/1
+  ip address 10.0.23.3 255.255.255.252
+  no shutdown
+ exit
+ interface GigabitEthernet0/2
+  ip address 192.168.3.1 255.255.255.0
+  no shutdown
+ exit
+
+ ! OSPF configuration
+ router ospf 1
+  router-id 3.3.3.3
+  network 10.0.13.0 0.0.0.3 area 0
+  network 10.0.23.0 0.0.0.3 area 0
+  network 192.168.3.0 0.0.0.255 area 0
+ exit
+end
